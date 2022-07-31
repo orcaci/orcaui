@@ -14,27 +14,15 @@ const COLUMNS = [
     name: "Name"
   },
   {
-    key: "first_name",
-    name: "First Name"
-  },
-  {
-    key: "last_name",
-    name: "Last Name"
-  },
-  {
-    key: "email",
-    name: "Email"
-  },
-  {
-    key: "Status",
-    name: "User Status"
+    key: "status",
+    name: "Status"
   },
   {
     key: "action",
     name: "action",
     render: (row: any) => {
       return <div className={"flex flex-row flex-nowrap gap-4"}>
-        <PencilIcon className="h-4 w-4" aria-hidden="true"/>
+        <PencilIcon className="h-4 w-4" aria-hidden="true" />
         <TrashIcon className="h-4 w-4" aria-hidden="true"/>
       </div>
     },
@@ -67,26 +55,26 @@ const SOURCE = [
   }
 ];
 
-export function UserManagement() {
-  const [users, setUsers] = useState([]);
-  const [columns, setColumns] = useState([]);
+export function RoleManagement() {
+  const [roles, setRoles] = useState([]);
+  const [columns, setColumns] = useState(COLUMNS);
   const init = () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     setColumns(COLUMNS);
-    getUsers();
+    getRoles();
   }
-  const getUsers = () => {
-    Service.get(Endpoint.v1.admin.getUsers).then(response => {
-      const users = response.json();
-      setUsers(users);
+  const getRoles = () => {
+    Service.get(Endpoint.v1.admin.getRoles).then(response => {
+      const roles = response.json();
+      setRoles(roles);
     })
   }
   return (
       <div className={"flex-auto"}>
         <Table
           column={columns}
-          source={users}
+          source={roles}
           pageSizeOption={[10, 25, 50]}
           defaultPageSize={1}
           defaultKey={"no"}

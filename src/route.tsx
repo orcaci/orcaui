@@ -62,8 +62,8 @@ export const MAIN_ROUTES = [
       {
         path: "role",
         component: () => {
-          const { DataTable } = lazily(() => import("./datatable"));
-          return DataTable;
+          const { RoleManagement } = lazily(() => import("./pages/admin/role"));
+          return RoleManagement;
         },
         name: "Role Management",
         isMenu: true,

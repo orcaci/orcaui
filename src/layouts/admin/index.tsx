@@ -4,6 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 
 export const ADMIN_ROUTES = [
   {
+    key: "userManagement",
     path: "user",
     component: () => {
       const { UserManagement } = lazily(() => import("../../pages/admin/user"));
@@ -15,10 +16,11 @@ export const ADMIN_ROUTES = [
     relativePath: "/admin/user"
   },
   {
-    path: "/role",
+    key: "roleManagement",
+    path: "role",
     component: () => {
-      const { DataTable } = lazily(() => import("../../datatable"));
-      return DataTable;
+      const { RoleManagement } = lazily(() => import("../../pages/admin/role"));
+      return RoleManagement;
     },
     name: "Role Management",
     isMenu: true,
@@ -64,7 +66,7 @@ export function AdminLayout() {
           {ADMIN_ROUTES.map((item: any) => {
             if (item.isMenu)
               return (
-                <li className="relative">
+                <li className="relative" key={item.key}>
                   <Link
                     to={item.relativePath}
                     className="flex space-x-4 items-center text-sm py-4 px-5 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"

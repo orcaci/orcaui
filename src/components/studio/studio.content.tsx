@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {useCallback, useState} from "react";
 import ReactFlow, {
   addEdge,
@@ -57,14 +58,17 @@ export function StudioContent() {
   const [nodes, setNodes] = useState(nodeSource);
   const [edges, setEdges] = useState(edgeSource);
   const onNodesChange = useCallback(
-      (changes: NodeChange[]) => setNodes((nds: Node) => applyNodeChanges(changes, nds)),
+      // @ts-ignore
+      (changes: NodeChange[]) => setNodes((nds) => applyNodeChanges(changes, nds)),
       [setNodes]
   );
   const onEdgesChange = useCallback(
+      // @ts-ignore
       (changes: EdgeChange[]) => setEdges((eds) => applyEdgeChanges(changes, eds)),
       [setEdges]
   );
   const onConnect = useCallback(
+      // @ts-ignore
       (connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
       [setEdges]
   );

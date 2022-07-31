@@ -6,6 +6,8 @@ export interface ColumnInterface {
   width?: number;
   isResize?: boolean;
   isFilter?: boolean;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  render?: (row: any) => {};
 }
 
 export interface DataTableInterface {
@@ -77,7 +79,7 @@ export function Table(props: DataTableInterface) {
                           className="border py-4 px-6"
                           key={`${item.key}-`}
                         >
-                          {row[item.key]}
+                          {item.render ? item.render(row) : row[item.key]}
                         </td>
                       );
                     })}
