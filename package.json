@@ -34,8 +34,7 @@
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "local-start": "react-scripts --openssl-legacy-provider start",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public",
-    "chromatic": "chromatic --project-token=CHROMATIC_PROJECT_TOKEN"
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": [
