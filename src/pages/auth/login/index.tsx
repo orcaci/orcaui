@@ -1,15 +1,42 @@
 import { LockClosedIcon } from "@heroicons/react/solid";
+import {Checkbox} from "../../../core/checkbox";
+import {Input} from "../../../core/input";
+import {Password} from "../../../core/password";
+import create from "zustand";
+import {useState} from "react";
+import {Service} from "../../../service";
+import {Endpoint} from "../../../service/endpoint";
 // import { useState } from "react";
 // import { useHistory } from "react-router-dom";
 
+interface LoginForm {
+  username: string;
+  password: string;
+  remember?: boolean;
+}
+
 export function Login() {
+  const loginForm = create<LoginForm>((set) => ({
+    username: "",
+    password: "",
+    remember: true,
+    setUsername: (e: { target: { value: any; }; }) => set((state) => ({ username: e.target.value })),
+    setPassword: (e: { target: { value: any; }; }) => set((state) => ({ password: e.target.value })),
+  }))
   // const history = useHistory();
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  const onFinish = async (values: any) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const onFinish = async (event: any) => {
+    event.preventDefault();
     try {
       // values.password = btoa(values.password);
-      localStorage.setItem("loggedIn", "true");
+      // localStorage.setItem("loggedIn", "true");
+      const userLogin = {
+        "username": "admin@orca.ci",
+        "password": "admin@123"
+      }
+      const response = await Service.post(Endpoint.v1.auth.login, {"body": userLogin});
+      console.log(response)
       // history.push("/home");
       // const result = await axios.post("/api/user/login", values);
       // console.log(result.data);
@@ -41,53 +68,20 @@ export function Login() {
               Sign in to your account
             </h2>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form className="mt-8 space-y-6" onSubmit={onFinish}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
-                />
-              </div>
-              <div>
-                <label htmlFor="password" className="sr-only">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
-                />
-              </div>
+              <Input key={"email-address"} title={"Email address"} srOnly={true} placeholder={"Email address"}
+                     type={"email"} autoComplete={"email"} value={email} onChange={(e)=>setEmail(e.target.value)}
+                     classStyle={"appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"}/>
+              <Password key={"password"} title={"password"} srOnly={true} placeholder={"Password"} autoComplete={"current-password"}
+                        onChange={(e)=>setPassword(e.target.value)}
+                     classStyle={"appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"}/>
             </div>
 
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  Remember me
-                </label>
+                <Checkbox key={"remember-me"} label={"Remember me"}></Checkbox>
               </div>
             </div>
 
@@ -95,7 +89,6 @@ export function Login() {
               <button
                 type="submit"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                onClick={onFinish}
               >
                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                   <LockClosedIcon

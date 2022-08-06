@@ -1,6 +1,6 @@
 import { Table } from "../../../core/table";
 import {PencilIcon, TrashIcon} from "@heroicons/react/solid";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Service} from "../../../service";
 import {Endpoint} from "../../../service/endpoint";
 
@@ -42,7 +42,7 @@ const COLUMNS = [
 ];
 const SOURCE = [
   {
-    no: 1,
+    id: 1,
     name: "vasanth",
     age: 34,
     gender: "Male",
@@ -50,7 +50,7 @@ const SOURCE = [
     Desigination: "SSE"
   },
   {
-    no: 2,
+    id: 2,
     name: "vasanth",
     age: 34,
     gender: "Male",
@@ -58,7 +58,7 @@ const SOURCE = [
     Desigination: "SSE"
   },
   {
-    no: 3,
+    id: 3,
     name: "vasanth",
     age: 34,
     gender: "Male",
@@ -69,17 +69,16 @@ const SOURCE = [
 
 export function UserManagement() {
   const [users, setUsers] = useState([]);
-  const [columns, setColumns] = useState([]);
-  const init = () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    setColumns(COLUMNS);
+  const [columns, setColumns] = useState(COLUMNS);
+  useEffect(() => {
+    console.log(
+        "Occurs ONCE, AFTER the initial render."
+    );
     getUsers();
-  }
+  }, []);
   const getUsers = () => {
     Service.get(Endpoint.v1.admin.getUsers).then(response => {
-      const users = response.json();
-      setUsers(users);
+      setUsers(response);
     })
   }
   return (

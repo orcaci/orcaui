@@ -28,7 +28,7 @@ export const Service = {
   get: async (url: string) => {
     return sendRequest(url);
   },
-  post: (url: string, options: any) => {
+  post: (url: string, options: any={}) => {
     options.method = "POST";
     return sendRequest(url, options);
   },

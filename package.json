@@ -96,5 +96,6 @@
     "webpack": "^5.74.0"
   },
   "readme": "ERROR: No README data found!",
+  "proxy": "http://127.0.0.1:8080/",
   "_id": "web@0.1.0"
 }

@@ -1,6 +1,9 @@
 
 export const Endpoint = {
     v1: {
+        auth: {
+            login: "/v1/auth/signin"
+        },
         admin: {
             getUsers: "/v1/admin/user/",
             createUser: "/v1/admin/user/",
