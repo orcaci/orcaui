@@ -3,7 +3,7 @@ import { AcademicCapIcon, UserIcon } from "@heroicons/react/outline";
 
 export const PRIVATE_ROUTES = [
   {
-    path: "/admin",
+    path: "admin",
     component: () => {
       const { AdminLayout } = lazily(() => import("./layouts/admin"));
       return AdminLayout;
