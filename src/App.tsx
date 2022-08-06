@@ -53,20 +53,18 @@ function App() {
                   </Authorizer>
                 }
               >
-                {route.nestedRoute ? (
-                  route.nestedRoute.map((subRoute) => {
-                    const SubRouteComponent = subRoute.component();
-                    return (
-                      <Route
-                        path={subRoute.path}
-                        key={subRoute.path}
-                        element={<SubRouteComponent />}
-                      />
-                    );
-                  })
-                ) : (
-                  <div>No String</div>
-                )}
+                {route.nestedRoute
+                  ? route.nestedRoute.map((subRoute) => {
+                      const SubRouteComponent = subRoute.component();
+                      return (
+                        <Route
+                          path={subRoute.path}
+                          key={subRoute.path}
+                          element={<SubRouteComponent />}
+                        />
+                      );
+                    })
+                  : null}
               </Route>
             );
           })}

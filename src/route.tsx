@@ -3,7 +3,15 @@ import { AcademicCapIcon, UserIcon } from "@heroicons/react/outline";
 
 export const PRIVATE_ROUTES = [
   {
-    path: "admin",
+    path: "/",
+    component: () => {
+      const { HomeLayout } = lazily(() => import("./layouts/home"));
+      return HomeLayout;
+    },
+    key: "home"
+  },
+  {
+    path: "/admin",
     component: () => {
       const { AdminLayout } = lazily(() => import("./layouts/admin"));
       return AdminLayout;
@@ -135,13 +143,5 @@ export const PUBLIC_ROUTES = [
       return ResetPassword;
     },
     key: "setpassword"
-  },
-  {
-    path: "/",
-    component: () => {
-      const { HomeLayout } = lazily(() => import("./layouts/home"));
-      return HomeLayout;
-    },
-    key: "home"
   }
 ];
