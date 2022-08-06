@@ -1,12 +1,12 @@
-import { LockClosedIcon } from "@heroicons/react/solid";
-import {Checkbox} from "../../../core/checkbox";
-import {Input} from "../../../core/input";
-import {Password} from "../../../core/password";
+import { useState } from "react";
 import create from "zustand";
-import {useState} from "react";
-import {Service} from "../../../service";
-import {Endpoint} from "../../../service/endpoint";
-// import { useState } from "react";
+import { LockClosedIcon } from "@heroicons/react/solid";
+
+import { Checkbox } from "../../../core/checkbox";
+import { Input } from "../../../core/input";
+import { Password } from "../../../core/password";
+import { Service } from "../../../service";
+import { Endpoint } from "../../../service/endpoint";
 // import { useHistory } from "react-router-dom";
 
 interface LoginForm {
@@ -20,23 +20,32 @@ export function Login() {
     username: "",
     password: "",
     remember: true,
-    setUsername: (e: { target: { value: any; }; }) => set((state) => ({ username: e.target.value })),
-    setPassword: (e: { target: { value: any; }; }) => set((state) => ({ password: e.target.value })),
-  }))
+    setUsername: (e: { target: { value: any } }) =>
+      set((state) => ({ username: e.target.value })),
+    setPassword: (e: { target: { value: any } }) =>
+      set((state) => ({ password: e.target.value }))
+  }));
+
   // const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const onFinish = async (event: any) => {
     event.preventDefault();
     try {
       // values.password = btoa(values.password);
-      // localStorage.setItem("loggedIn", "true");
       const userLogin = {
-        "username": "admin@orca.ci",
-        "password": "admin@123"
+        username: "admin@orca.ci",
+        password: "admin@123"
+      };
+      const response = await Service.post(Endpoint.v1.auth.login, {
+        body: userLogin
+      });
+      if (response) {
+        localStorage.setItem("loggedIn", "true");
       }
-      const response = await Service.post(Endpoint.v1.auth.login, {"body": userLogin});
-      console.log(response)
+
+      console.log(response);
       // history.push("/home");
       // const result = await axios.post("/api/user/login", values);
       // console.log(result.data);
@@ -54,6 +63,7 @@ export function Login() {
       // message.error(`Login failed! Error: ${error}`);
     }
   };
+
   return (
     <>
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -71,12 +81,30 @@ export function Login() {
           <form className="mt-8 space-y-6" onSubmit={onFinish}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
-              <Input key={"email-address"} title={"Email address"} srOnly={true} placeholder={"Email address"}
-                     type={"email"} autoComplete={"email"} value={email} onChange={(e)=>setEmail(e.target.value)}
-                     classStyle={"appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"}/>
-              <Password key={"password"} title={"password"} srOnly={true} placeholder={"Password"} autoComplete={"current-password"}
-                        onChange={(e)=>setPassword(e.target.value)}
-                     classStyle={"appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"}/>
+              <Input
+                key={"email-address"}
+                title={"Email address"}
+                srOnly={true}
+                placeholder={"Email address"}
+                type={"email"}
+                autoComplete={"email"}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                classStyle={
+                  "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                }
+              />
+              <Password
+                key={"password"}
+                title={"password"}
+                srOnly={true}
+                placeholder={"Password"}
+                autoComplete={"current-password"}
+                onChange={(e) => setPassword(e.target.value)}
+                classStyle={
+                  "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                }
+              />
             </div>
 
             <div className="flex items-center justify-between">

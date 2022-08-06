@@ -4,10 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
-    font-family: 'Comfortaa', monospace;
+  font-family: "Comfortaa", monospace;
 }
+
+#root {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
 /* 
 :root {
   --white: #ffffff;

@@ -1,46 +1,7 @@
 import { lazily } from "react-lazily";
 import { AcademicCapIcon, UserIcon } from "@heroicons/react/outline";
 
-// function AuthorizedComponent(props: any) {
-//   const { children } = props;
-//   // const history = useHistory();
-//   const isLoggedIn = localStorage.getItem("loggedIn") === "true";
-
-//   if (isLoggedIn) {
-//     return children;
-//   } else {
-//     // history.push("/login");
-//     return null;
-//   }
-// }
-
-export const MAIN_ROUTES = [
-  {
-    path: "/login",
-    component: (): React.FunctionComponent => {
-      const { Login } = lazily(() => import("./pages/auth/login"));
-      return Login;
-    },
-    key: "login"
-  },
-  {
-    path: "/setpassword",
-    component: (): React.FunctionComponent => {
-      const { ResetPassword } = lazily(
-        () => import("./pages/auth/resetpassword")
-      );
-      return ResetPassword;
-    },
-    key: "setpassword"
-  },
-  {
-    path: "/",
-    component: () => {
-      const { HomeLayout } = lazily(() => import("./layouts/home"));
-      return HomeLayout;
-    },
-    key: "home"
-  },
+export const PRIVATE_ROUTES = [
   {
     path: "/admin",
     component: () => {
@@ -154,4 +115,33 @@ export const HOME_ROUTES = [
   //     return DataTable;
   //   }
   // }
+];
+
+export const PUBLIC_ROUTES = [
+  {
+    path: "/login",
+    component: (): React.FunctionComponent => {
+      const { Login } = lazily(() => import("./pages/auth/login"));
+      return Login;
+    },
+    key: "login"
+  },
+  {
+    path: "/setpassword",
+    component: (): React.FunctionComponent => {
+      const { ResetPassword } = lazily(
+        () => import("./pages/auth/resetpassword")
+      );
+      return ResetPassword;
+    },
+    key: "setpassword"
+  },
+  {
+    path: "/",
+    component: () => {
+      const { HomeLayout } = lazily(() => import("./layouts/home"));
+      return HomeLayout;
+    },
+    key: "home"
+  }
 ];
